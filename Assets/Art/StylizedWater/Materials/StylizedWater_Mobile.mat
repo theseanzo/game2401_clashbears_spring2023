@@ -12,7 +12,6 @@ Material:
   m_ValidKeywords:
   - _LIGHTING_ON
   m_InvalidKeywords:
-  - _UNLIT_ON
   - _USEINTERSECTIONFOAM_ON
   - _WORLDSPACETILIBG_ON
   m_LightmapFlags: 0
