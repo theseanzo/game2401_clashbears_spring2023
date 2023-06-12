@@ -13,7 +13,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
             {
                 _instance = FindAnyObjectByType<T>();
             }
-            return Instance;
+            return _instance;
         }
     }
 }
