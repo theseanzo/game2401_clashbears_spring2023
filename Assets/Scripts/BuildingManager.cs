@@ -17,11 +17,19 @@ public class BuildingManager : Singleton<BuildingManager>
     {
         
     }
-
+    public void SetCurrent(Building buildingPrefab) //this will be called to set up a new building to be placed, replacing any old buildings
+    {
+        if(current != null) //in the case where we have a current building, remove that building
+        {
+            Destroy(current.gameObject);
+        }
+        current = Instantiate(buildingPrefab);
+        current.name = buildingPrefab.name;
+    }
     // Update is called once per frame
     void Update()
     {
-        //we are going to start by creating a Ray object, from ouyr mouse position pointing into the world
+        //we are going to start by creating a Ray object, from our mouse position pointing into the world
         Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hitInfo;
 
