@@ -11,4 +11,12 @@ public class Soldier : Unit
     {
         
     }
+    public override void OnAttackActionEvent()
+    {
+        base.OnAttackActionEvent(); //tell its parent to do its thing
+        if(attackTarget != null)
+        {
+            attackTarget.OnHit(attackPower);
+        }
+    }
 }
