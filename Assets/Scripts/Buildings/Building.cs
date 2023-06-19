@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider), typeof(Rigidbody))]
-public class Building : MonoBehaviour
+public class Building : BaseObject
 {
     public Vector2Int size;
     private float colliderHeight = 2f;

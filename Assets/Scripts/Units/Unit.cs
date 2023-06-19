@@ -5,15 +5,20 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class Unit : MonoBehaviour
+[RequireComponent(typeof(Seeker))]
+public class Unit : BaseObject
 {
     //Gameplay variables
     public float moveSpeed;
     public float rotationSpeed;
-    public float attackRange;
+    public float attackRange = 10f;
+    public float attackInterval = 2f;
+    public int attackPower = 10;
+    private float lastAttackTime = 0;//we will use to increment our time for attacking to make sure we don't attack constantly
 
     //Components
-    private Seeker seeker;
+    protected Seeker seeker;
+    protected Animator anim;
 
     //Run-time variables
     private Path currentPath;
@@ -21,21 +26,29 @@ public class Unit : MonoBehaviour
     private Coroutine currentState;
     private Vector3 lastPos;
 
+    protected Building attackTarget; //the building we are attacking; it is protected because we most likely will want to access this variable within our children of Unit
+
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("I am the seeker");
+        lastPos = transform.position; //our current lastPos is where we are
         seeker = GetComponent<Seeker>();
-        
+        anim = GetComponentInChildren<Animator>();
         SetState(OnIdle());
     }
 
     private void FixedUpdate()
     {
-
+        SetAnimationSpeed();
     }
 
-
+    private void SetAnimationSpeed()
+    {
+        Vector3 movement = transform.position - lastPos;
+        anim.SetFloat("Speed", movement.magnitude);
+        //we now need to store the last position at the end of each frame
+        lastPos = transform.position;
+    }
 
     private void OnPathComplete(Path p)
     {
@@ -63,7 +76,39 @@ public class Unit : MonoBehaviour
             LookForBuilding();
         }
     }
+    IEnumerator OnAttack(Building target)
+    {
+        attackTarget = target;
+        while (true)
+        {
+            if(target != null)
+            {
+                LookTowards(target.transform.position);//this way we are not swinging wildly in the wrong direction
 
+            }
+
+            lastAttackTime += Time.deltaTime; //update our attack time based on the amount of time passed in frames
+            if(lastAttackTime >= attackInterval)
+            {
+                lastAttackTime = 0;
+                Attack(); 
+            }
+            if(target == null)
+            {
+                SetState(OnIdle());
+            }
+            yield return new WaitForFixedUpdate();
+        }
+    }
+    protected virtual void Attack()
+    {
+        //do some damage, and we want to play our animation
+        anim.SetTrigger("Attack");
+    }
+    public virtual void OnAttackActionEvent()
+    {
+        //this is going to called by our animation 
+    }
     IEnumerator OnMoveToTarget(Building target)
     {
         //The seeker calculates the path to this position
@@ -81,10 +126,8 @@ public class Unit : MonoBehaviour
                 transform.position = Vector3.MoveTowards(transform.position, nextPoint, moveSpeed * Time.fixedDeltaTime);
 
                 //We calculate the target rotation by calculating the direction vector, and from that the rotation
-                Vector3 targetDirection = nextPoint - transform.position;
-                Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
 
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
+                LookTowards(nextPoint);
 
                 //If the Unit reached the next point in the path....
                 if (transform.position == nextPoint)
@@ -98,11 +141,29 @@ public class Unit : MonoBehaviour
                     currentIndex = 0;
                     currentPath = null;
                 }
+                //Instead of going towards the center of the building, we are going to go to the closest point of the building to us; this insures that our units will attack the sides of buildings rather than the center
+                Vector3 targetPos = target.GetComponent<BoxCollider>().ClosestPointOnBounds(transform.position);
+                if(Vector3.Distance(transform.position, targetPos) <= attackRange)
+                {
+                    SetState(OnAttack(target));//we now set a new state which is for attacking the target
+                    //we are going to set our state to OnAttacking
+                }
+
 
             }
         }
     }
-
+    void LookTowards(Vector3 position)
+    {
+        //for our look direction, we calculate the target's rotation by calculating the direction vector, and then, from that, our rotation
+        Vector3 targetDirection = position - transform.position;
+        //we only want to rotate if there is an actual direction
+        if(targetDirection != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
+        }
+    }
 
     private void LookForBuilding()
     {
