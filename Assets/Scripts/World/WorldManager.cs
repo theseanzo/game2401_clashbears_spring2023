@@ -13,7 +13,7 @@ public class WorldManager : Singleton<WorldManager>
     
     void Start()
     {
-        Load(); //makes ure that we have instantiated the instance
+        Load(); //makes sure that we have instantiated the instance
     }
     private void Load()//this will be called by our start and will load the data
     {
