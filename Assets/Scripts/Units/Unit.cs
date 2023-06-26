@@ -29,7 +29,7 @@ public class Unit : BaseObject
     protected Building attackTarget; //the building we are attacking; it is protected because we most likely will want to access this variable within our children of Unit
 
     // Start is called before the first frame update
-    void Start()
+    public virtual void Start()
     {
         lastPos = transform.position; //our current lastPos is where we are
         seeker = GetComponent<Seeker>();
