@@ -5,7 +5,10 @@ using UnityEngine;
 public class Soldier : Unit
 {
     // Start is called before the first frame update
-
+    public override void Start()
+    {
+        base.Start();//we call our parent's start function
+    }
     // Update is called once per frame
     void Update()
     {

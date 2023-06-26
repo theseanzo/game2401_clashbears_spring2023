@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2389899204805072221}
   - component: {fileID: 7713537210826716892}
+  - component: {fileID: 1835023379661514327}
   m_Layer: 0
   m_Name: Archer
   m_TagString: Untagged
@@ -45,6 +46,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6649e09e40eb4d144920025a2b2ca0f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 100
+  moveSpeed: 1
+  rotationSpeed: 1
+  attackRange: 7
+  attackInterval: 2
+  attackPower: 10
+  arrowStartPos: {fileID: 1007930447623807882}
+--- !u!114 &1835023379661514327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3456281360096852693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  drawGizmos: 1
+  detailedGizmos: 0
+  startEndModifier:
+    addPoints: 0
+    exactStartPoint: 3
+    exactEndPoint: 3
+    useRaycasting: 0
+    mask:
+      serializedVersion: 2
+      m_Bits: 4294967295
+    useGraphRaycasting: 0
+  traversableTags: -1
+  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  graphMask:
+    value: -1
 --- !u!1001 &1003262147269801358
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -105,6 +141,51 @@ PrefabInstance:
 --- !u!4 &1000894804454410140 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4408071192752658, guid: 8ddb8672869b2ac4182b06d5e50cfef6,
+    type: 3}
+  m_PrefabInstance: {fileID: 1003262147269801358}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1002852911566412196 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1852622927391786, guid: 8ddb8672869b2ac4182b06d5e50cfef6,
+    type: 3}
+  m_PrefabInstance: {fileID: 1003262147269801358}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &8451551780925609545
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1002852911566412196}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: b7e10e6faa72e074888c402c5a76cf81, type: 3}
+  m_Controller: {fileID: 22100000, guid: 5658c5d2374da6b4cb09113ed652aeb9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7997757632470976317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1002852911566412196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb6184a03a6055b42922bcdd58201c1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1007930447623807882 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4696002895697412, guid: 8ddb8672869b2ac4182b06d5e50cfef6,
     type: 3}
   m_PrefabInstance: {fileID: 1003262147269801358}
   m_PrefabAsset: {fileID: 0}
