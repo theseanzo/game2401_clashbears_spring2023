@@ -133,7 +133,7 @@ PrefabInstance:
     - target: {fileID: 2389899204805072221, guid: 20ca78989e841e84f8855cc9e67ad6ef,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2389899204805072221, guid: 20ca78989e841e84f8855cc9e67ad6ef,
         type: 3}
@@ -1411,6 +1411,14 @@ MonoBehaviour:
   bounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 20, y: 1, z: 20}
+  zoomSpeed: 2
+  zoomMin: 5
+  zoomMax: 60
+  minAngle: 5
+  maxAngle: 40
+  translationSpeed: 0.5
+  panSpeed: 15
+  rotationSpeed: 50
 --- !u!4 &1543195089
 Transform:
   m_ObjectHideFlags: 0
