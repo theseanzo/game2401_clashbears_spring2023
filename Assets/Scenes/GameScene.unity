@@ -531,7 +531,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0db578686a0301442a5863d97fcb48aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  linkedObject: {fileID: 0}
 --- !u!114 &188584953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1262,7 +1261,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb6184a03a6055b42922bcdd58201c1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unit: {fileID: 0}
 --- !u!95 &451945918
 Animator:
   serializedVersion: 5
@@ -1436,7 +1434,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b1729c880a2e7b499fa92bd3d7e2135, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: a43dc75aef61c154692417828b236904, type: 2}
 --- !u!4 &478769755
 Transform:
   m_ObjectHideFlags: 0
@@ -1568,10 +1565,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 419078c26c2dae643a26be64ec6dfda1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  current: {fileID: 0}
-  grid: {fileID: 183126663}
-  gridFadeSpeed: 5
-  gridAlpha: 0
 --- !u!4 &587623682
 Transform:
   m_ObjectHideFlags: 0
@@ -1772,9 +1765,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: be572f603662a384185b5050b39a25b7, type: 2}
-  m_sharedMaterial: {fileID: 7247236103977694007, guid: be572f603662a384185b5050b39a25b7,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1909,18 +1901,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b1c388208008664e93ba3c960bdb847, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
-  moveSpeed: 1
-  rotationSpeed: 1
-  attackRange: 1
-  attackInterval: 2
-  attackPower: 10
-  lastAttackTime: 0
-  seeker: {fileID: 0}
-  anim: {fileID: 0}
-  currentIndex: 0
-  lastPos: {x: 0, y: 0, z: 0}
-  attackTarget: {fileID: 0}
 --- !u!4 &626164139
 Transform:
   m_ObjectHideFlags: 0
@@ -4059,7 +4039,7 @@ PrefabInstance:
     - target: {fileID: 7751316299235492306, guid: 1e6b7907340150f44a24b5f94c0640df,
         type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7751316300458190288, guid: 1e6b7907340150f44a24b5f94c0640df,
         type: 3}
@@ -4395,7 +4375,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d11c1b21546f6f49b963f16205eb9c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonOriginal: {fileID: 188584952}
 --- !u!1 &1543195087
 GameObject:
   m_ObjectHideFlags: 0
@@ -4506,7 +4485,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb6184a03a6055b42922bcdd58201c1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unit: {fileID: 0}
 --- !u!95 &1559004458
 Animator:
   serializedVersion: 5
@@ -4579,7 +4557,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05b0854e0087ee24585810e36c948990, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingButtons: {fileID: 1518945899}
 --- !u!1 &1596338503
 GameObject:
   m_ObjectHideFlags: 0
@@ -5224,19 +5201,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6649e09e40eb4d144920025a2b2ca0f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
-  moveSpeed: 1
-  rotationSpeed: 1
-  attackRange: 7
-  attackInterval: 2
-  attackPower: 10
-  lastAttackTime: 0
-  seeker: {fileID: 0}
-  anim: {fileID: 0}
-  currentIndex: 0
-  lastPos: {x: 0, y: 0, z: 0}
-  attackTarget: {fileID: 0}
-  arrowStartPos: {fileID: 122765063}
 --- !u!4 &1701791147
 Transform:
   m_ObjectHideFlags: 0

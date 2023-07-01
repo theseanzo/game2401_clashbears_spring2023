@@ -59,6 +59,7 @@ public class CamControls : MonoBehaviour
         camera = GetComponentInChildren<Camera>();
         originalPosition = camera.transform.position;
         originalRotation = camera.transform.rotation;
+        layerMask=LayerMask.GetMask("Terrain");
     }
 
     // Update is called once per frame
@@ -68,9 +69,10 @@ public class CamControls : MonoBehaviour
         mouseYMovement = Input.GetAxis("Mouse Y");
         scrollWheel = Input.GetAxis("Mouse ScrollWheel");
         mousePosition = Input.mousePosition;
-        //disable zoom and pan only when rotating the camera
+        //disable action hovering UI
         if (!EventSystem.current.IsPointerOverGameObject())
         {
+            //disable zoom and pan only when rotating the camera
             if (Input.GetButton("Fire1"))
             {
                 RotateCamera();
@@ -156,24 +158,24 @@ public class CamControls : MonoBehaviour
     void Panning()
     {
         viewportPosition = camera.WorldToViewportPoint(mousePosition);
-        //when we pan the mouse, the camera will pan in a bounded range
+        //when we pan the mouse out of game screen, the camera will pan in a bounded range
         //notice on Y Axis, we need to make it not bounded by bound
-        if (Input.mousePosition.x >= Screen.width)
+        if ((Input.mousePosition.x >= Screen.width)&&(Input.GetAxis("Mouse X")>0))
         {
             HorizontalPan();
         }
 
-        if (Input.mousePosition.x <= 0)
+        if ((Input.mousePosition.x <= 0)&&(Input.GetAxis("Mouse X")<0))
         {
             HorizontalPan();
         }
 
-        if (Input.mousePosition.y >= Screen.height)
+        if ((Input.mousePosition.y >= Screen.height)&&(Input.GetAxis("Mouse Y")>0))
         {
             VerticalPan();
         }
 
-        if (Input.mousePosition.y <= 0)
+        if ((Input.mousePosition.y <= 0)&&(Input.GetAxis("Mouse Y")<0))
         {
             VerticalPan();
         }

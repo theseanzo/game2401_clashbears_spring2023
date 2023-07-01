@@ -7,9 +7,6 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/BuildingManager.cs" root0="FORCE_HIGHLIGHTING" />
-  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -90,6 +87,7 @@
       <workItem from="1686415574821" duration="2518000" />
       <workItem from="1686425209566" duration="19570000" />
       <workItem from="1686585611313" duration="4977000" />
+      <workItem from="1688181080679" duration="722000" />
     </task>
     <servers />
   </component>
