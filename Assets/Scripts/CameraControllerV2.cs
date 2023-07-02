@@ -10,17 +10,17 @@ public class CameraControllerV2 : MonoBehaviour
     private EventSystem _eventSystem;
 
     [SerializeField] public Bounds CameraBounds;
-    [SerializeField][Range(0, 1000)] public float MinZoomHeight;
-    [SerializeField][Range(0, 1000)] public float MaxZoomHeight;
-    [SerializeField][Range(0, Mathf.Infinity)] public float MinZoomAngle;
-    [SerializeField][Range(0, Mathf.Infinity)] public float MaxZoomAngle;
+    [SerializeField][Range(0, 1000)] public float MinZoomDistance = 5.0f;
+    [SerializeField][Range(0, 1000)] public float MaxZoomDistance = 50.0f;
+    [SerializeField][Range(0, 90)] public float ZoomAngle = 45.0f;
+    [SerializeField][Range(0, 1000)] public float HorizontalOffset = 5.0f;
     [SerializeField][Range(0, 1)] public float StartingZoomAmount = 0.5f;
-    [SerializeField] public float FullZoomTime;
+    [SerializeField] public float ZoomSpeed;
     [SerializeField][Range(0, 360)] public float StartingYAngle;
     [SerializeField] public float RotationSpeed;
     [SerializeField] public float MaxRaycastDistance = 5000.0f;
 
-    private float _currentZoomAmount;
+    //private float _currentZoomAmount;
 
     private void Start()
     {
@@ -28,7 +28,10 @@ public class CameraControllerV2 : MonoBehaviour
         _eventSystem = EventSystem.current;
 
         //init _currentZoomAmount
-        _currentZoomAmount = StartingZoomAmount;
+        //_currentZoomAmount = StartingZoomAmount;
+
+        //position camera based on initial zoom
+        ApplyZoom();
     }
 
     private void Update()
@@ -44,49 +47,51 @@ public class CameraControllerV2 : MonoBehaviour
             ZoomCamera();
             PanCamera();
             RotateCamera();
-
         }
     }
 
     private void ZoomCamera()
     {
+        //only update camera zoom if zooming
         if (Input.GetAxis("Mouse ScrollWheel") != 0.0f)
         {
             //get zoom focus point
-            Vector3 zoomFocus;
-            RaycastHit hit;
-            if (Input.GetAxis("Mouse ScrollWheel") > 0.0f && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, MaxRaycastDistance))
+            RaycastHit screenHit;
+            RaycastHit mouseHit;
+            if (Input.GetAxis("Mouse ScrollWheel") > 0.0f && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out mouseHit, MaxRaycastDistance) && Physics.Raycast(Camera.main.ScreenPointToRay(Camera.main.ViewportToScreenPoint(Vector3.one / 2.0f)), out screenHit, MaxRaycastDistance))
             {
-                //zoom in focus
-                zoomFocus = new Vector3(hit.point.x, hit.point.y, hit.point.z);
+                //move towards mouseHit on zoom in
+                //transform.position = new Vector3(Mathf.Lerp(transform.position.x, mouseHit.point.x, 0.5f), Mathf.Lerp(transform.position.y, mouseHit.point.y, 0.5f), Mathf.Lerp(transform.position.z, mouseHit.point.z, 0.5f));
+
+                //move pivot
+                transform.position = new Vector3(screenHit.point.x, screenHit.point.y, screenHit.point.z);
             }
-            else if (Physics.Raycast(Camera.main.ScreenPointToRay(Camera.main.ViewportToScreenPoint(Vector3.one / 2.0f)), out hit, MaxRaycastDistance))
+            else if (Physics.Raycast(Camera.main.ScreenPointToRay(Camera.main.ViewportToScreenPoint(Vector3.one / 2.0f)), out screenHit, MaxRaycastDistance))
             {
                 //zoom out focus
-                zoomFocus = new Vector3(hit.point.x, hit.point.y, hit.point.z);
+                transform.position = new Vector3(screenHit.point.x, screenHit.point.y, screenHit.point.z);
             }
-            else
-            {
-                //no object to focus on
-                zoomFocus = transform.position;
-            }
+
+            //clamp pivot within bounds
+            transform.position = CameraBounds.ClosestPoint(transform.position);
 
             //update zoom amount
-            _currentZoomAmount += Input.GetAxis("Mouse ScrollWheel") * 1.0f / FullZoomTime * Time.deltaTime;
+            //_currentZoomAmount += -Input.GetAxis("Mouse ScrollWheel") * ZoomSpeed * Time.deltaTime;
 
             //zoom in/out
-            if (!(Input.GetAxis("Mouse ScrollWheel") > 0.0f && Camera.main.transform.position.y < MinZoomHeight) && !(Input.GetAxis("Mouse ScrollWheel") < 0.0f && Camera.main.transform.position.y > MaxZoomHeight))
+            if (!(Input.GetAxis("Mouse ScrollWheel") > 0.0f && Camera.main.transform.position.y < MinZoomDistance) && !(Input.GetAxis("Mouse ScrollWheel") < 0.0f && Camera.main.transform.position.y > MaxZoomDistance))
             {
-                ApplyZoom(zoomFocus);
+                ApplyZoom();
                 //Camera.main.transform.position = Vector3.MoveTowards(Camera.main.transform.position, zoomFocus, Input.GetAxis("Mouse ScrollWheel") * FullZoomTime * Time.deltaTime);
             }
         }
     }
 
-    private void ApplyZoom(Vector3 zoomFocus)
+    private void ApplyZoom()
     {
-        //move camera//////////////////////////////////
-        Camera.main.transform.position = zoomFocus - transform.eulerAngles * Mathf.Lerp(MinZoomHeight / Mathf.Tan(MinZoomAngle), MaxZoomAngle / Mathf.Tan(MaxZoomAngle), _currentZoomAmount) + new Vector3(0.0f, Mathf.Lerp(MinZoomHeight, MaxZoomHeight, _currentZoomAmount), 0.0f);
+        //move camera
+        //Camera.main.transform.position = transform.position - (transform.forward * HorizontalOffset) + new Vector3(0.0f, Mathf.Lerp(MinZoomDistance, MaxZoomDistance, _currentZoomAmount), 0.0f);
+        Camera.main.transform.LookAt(transform.position);
     }
 
     private void PanCamera()
@@ -102,11 +107,11 @@ public class CameraControllerV2 : MonoBehaviour
     private void ClampCamera(Vector3 zoomFocus)
     {
         //clamp zoom
-        if (Vector3.Distance(transform.position, Camera.main.transform.position) < MinZoomHeight)
+        if (Vector3.Distance(transform.position, Camera.main.transform.position) < MinZoomDistance)
         {
-            Camera.main.transform.position = zoomFocus - (Camera.main.transform.forward * MinZoomHeight);
+            Camera.main.transform.position = zoomFocus - (Camera.main.transform.forward * MinZoomDistance);
         }
-        else if (Vector3.Distance(transform.position, Camera.main.transform.position) > MaxZoomHeight)
+        else if (Vector3.Distance(transform.position, Camera.main.transform.position) > MaxZoomDistance)
         {
             ////////todo clamp max
         }

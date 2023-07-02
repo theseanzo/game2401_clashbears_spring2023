@@ -1330,12 +1330,11 @@ MonoBehaviour:
   CameraBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 20, y: 1, z: 20}
-  MinZoomHeight: 5
-  MaxZoomHeight: 50
-  MinZoomAngle: 30
-  MaxZoomAngle: 90
+  MinZoomDistance: 5
+  MaxZoomDistance: 50
+  HorizontalOffset: 5
   StartingZoomAmount: 0.5
-  FullZoomTime: 5
+  ZoomSpeed: 15
   StartingYAngle: 45
   RotationSpeed: 15
   MaxRaycastDistance: 5000
